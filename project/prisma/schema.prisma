@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// enum Roles {
+//     ADMIN
+//     SUPERADMIN
+//     DOCTOR
+//     USER
+// }
+
+model users { 
+  userId Int @id @default(autoincrement())
+  email String  @unique
+  password String
+  phone String
+  joinedAt DateTime @default(now())
+  isAdmin Boolean @default(false)
+  // Role Roles @default(USER)
+
+}
+model Products {
+  prodId Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  prodName String
+  prodPrice String
+}
+
+model Stock {
+  stockId Int @id @default(autoincrement())
+  stockName String 
+  adrress  String
+  createdAt DateTime @default(now())
+}
+model Carts {
+  cartId Int @id @default(autoincrement())
+  userId Int
+  prodId Int
+  stockId Int
+  }
+  model Order_Item{
+    o_ItemId Int @default(autoincrement()) @id 
+    prodId Int
+    userId Int
+    price String
+    ordredTime DateTime @default(now())
+  }
+
+
+  enum STATES {
+    Somaliland
+    Somalia
+  }
+
+  enum Cities {
+    Hargeisa 
+    Borama 
+    Berbera
+  }
+
+
+  model Orders {
+    orderId Int @id @default(autoincrement())
+    userId Int
+    ordredTime DateTime @default(now())
+    addressVilage  String
+    addressCity Cities @default(Hargeisa)
+    addressCountry STATES @default(Somaliland)
+  }
