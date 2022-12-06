@@ -10,68 +10,93 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// enum Roles {
-//     ADMIN
-//     SUPERADMIN
-//     DOCTOR
-//     USER
+enum Roles {
+  Admin
+  Suppreadmin
+  User
+}
+
+// enum Roles1 {
+//   Is_paid
+//   Not_paid
 // }
 
-model users { 
-  userId Int @id @default(autoincrement())
-  email String  @unique
-  password String
-  phone String
-  joinedAt DateTime @default(now())
-  isAdmin Boolean @default(false)
-  // Role Roles @default(USER)
 
+model Users {
+  userID     Int       @id @default(autoincrement())
+  firstname  String
+  lastname   String
+  U_email    String    @unique
+  U_password String
+  U_phone    String   @unique 
+  U_Address  String
+  JiondAt    DateTime  @default(now())
+  Role       Roles     @default(User)
+  //Relation
+  order      Order[]
+  product    Product[]
+  Reviews     Reviews[]
+  cart       Cart[]
 }
-model Products {
-  prodId Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  prodName String
-  prodPrice String
+
+
+model Order {
+  order_Id   Int         @id @default(autoincrement())
+  customerAddress  String
+  // products         Json[]
+  shipping_price   Float
+  items_price      Float    
+  totalPrice       Float
+  isPaid   Boolean     @default(false)
+  CreateAt DateTime    @default(now())
+  UserID     Int
+  Customer  Users  @relation(fields: [UserID], references: [userID]) 
 }
 
-model Stock {
-  stockId Int @id @default(autoincrement())
-  stockName String 
-  adrress  String
-  createdAt DateTime @default(now())
+
+model Product {
+  pro_id     Int       @id @default(autoincrement())
+  name   String
+  price  Float
+  description String
+  image String
+  discount    Int       @default(0)
+  stockQty  Int
+  UserID     Int
+  cat_id  Int
+  Customer   Users     @relation(fields: [UserID], references: [userID])
+  Category    Category  @relation(fields: [cat_id], references: [category_ID])
+  cart       Cart[]
+  reviews    Reviews[]
+ 
 }
-model Carts {
-  cartId Int @id @default(autoincrement())
-  userId Int
-  prodId Int
-  stockId Int
-  }
-  model Order_Item{
-    o_ItemId Int @default(autoincrement()) @id 
-    prodId Int
-    userId Int
-    price String
-    ordredTime DateTime @default(now())
-  }
 
 
-  enum STATES {
-    Somaliland
-    Somalia
-  }
-
-  enum Cities {
-    Hargeisa 
-    Borama 
-    Berbera
-  }
+model Category {
+  category_ID Int  @id @default(autoincrement())
+  desc        String
+  img         String
+  product     Product[]
+}
 
 
-  model Orders {
-    orderId Int @id @default(autoincrement())
-    userId Int
-    ordredTime DateTime @default(now())
-    addressVilage  String
-    addressCity Cities @default(Hargeisa)
-    addressCountry STATES @default(Somaliland)
-  }
+
+model Reviews {
+  Rev_ID      Int      @id @default(autoincrement())
+  Userid     Int
+  product_id Int
+  rating     Int
+  cratedAt    DateTime @default(now())
+  // updatedAt  DateTime @updatedAt
+  Customer Users    @relation(fields: [Userid], references: [userID])
+  Product Product @relation(fields: [product_id], references: [pro_id])
+}
+
+model Cart {
+  Cart_ID     Int     @id @default(autoincrement())
+  UserID     Int
+  Pro_ID     Int
+  Quantity   Int     @default(0)
+  Connect    Product @relation(fields: [Pro_ID], references: [pro_id])
+  Customer Users   @relation(fields: [UserID], references: [userID])
+}
