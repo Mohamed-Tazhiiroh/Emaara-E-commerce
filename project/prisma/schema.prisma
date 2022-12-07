@@ -42,15 +42,14 @@ model Users {
 
 model Order {
   order_Id   Int         @id @default(autoincrement())
-  customerAddress  String
   // products         Json[]
-  shipping_price   Float
+  delivery_price   Float
   items_price      Float    
   totalPrice       Float
   isPaid   Boolean     @default(false)
   CreateAt DateTime    @default(now())
   UserID     Int
-  Customer  Users  @relation(fields: [UserID], references: [userID]) 
+  User  Users  @relation(fields: [UserID], references: [userID]) 
 }
 
 
@@ -63,9 +62,9 @@ model Product {
   discount    Int       @default(0)
   stockQty  Int
   UserID     Int
-  cat_id  Int
-  Customer   Users     @relation(fields: [UserID], references: [userID])
-  Category    Category  @relation(fields: [cat_id], references: [category_ID])
+  category_id  Int
+  Customer    Users     @relation(fields: [UserID], references: [userID])
+  Category    Category  @relation(fields: [category_id], references: [category_ID])
   cart       Cart[]
   reviews    Reviews[]
  
@@ -74,7 +73,7 @@ model Product {
 
 model Category {
   category_ID Int  @id @default(autoincrement())
-  desc        String
+  type        String
   img         String
   product     Product[]
 }
@@ -85,10 +84,11 @@ model Reviews {
   Rev_ID      Int      @id @default(autoincrement())
   Userid     Int
   product_id Int
+  body      String
   rating     Int
   cratedAt    DateTime @default(now())
   // updatedAt  DateTime @updatedAt
-  Customer Users    @relation(fields: [Userid], references: [userID])
+  User Users    @relation(fields: [Userid], references: [userID])
   Product Product @relation(fields: [product_id], references: [pro_id])
 }
 
@@ -97,6 +97,6 @@ model Cart {
   UserID     Int
   Pro_ID     Int
   Quantity   Int     @default(0)
-  Connect    Product @relation(fields: [Pro_ID], references: [pro_id])
-  Customer Users   @relation(fields: [UserID], references: [userID])
+  Product    Product @relation(fields: [Pro_ID], references: [pro_id])
+  User Users   @relation(fields: [UserID], references: [userID])
 }

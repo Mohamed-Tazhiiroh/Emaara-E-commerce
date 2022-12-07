@@ -1,40 +1,5 @@
-/*
-  Warnings:
-
-  - You are about to drop the `Carts` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Order_Item` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Orders` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Products` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `Stock` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `users` table. If the table is not empty, all the data it contains will be lost.
-
-*/
 -- CreateEnum
 CREATE TYPE "Roles" AS ENUM ('Admin', 'Suppreadmin', 'User');
-
--- DropTable
-DROP TABLE "Carts";
-
--- DropTable
-DROP TABLE "Order_Item";
-
--- DropTable
-DROP TABLE "Orders";
-
--- DropTable
-DROP TABLE "Products";
-
--- DropTable
-DROP TABLE "Stock";
-
--- DropTable
-DROP TABLE "users";
-
--- DropEnum
-DROP TYPE "Cities";
-
--- DropEnum
-DROP TYPE "STATES";
 
 -- CreateTable
 CREATE TABLE "Users" (
@@ -75,7 +40,7 @@ CREATE TABLE "Product" (
     "discount" INTEGER NOT NULL DEFAULT 0,
     "stockQty" INTEGER NOT NULL,
     "UserID" INTEGER NOT NULL,
-    "cat_id" INTEGER NOT NULL,
+    "category_id" INTEGER NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("pro_id")
 );
@@ -94,6 +59,7 @@ CREATE TABLE "Reviews" (
     "Rev_ID" SERIAL NOT NULL,
     "Userid" INTEGER NOT NULL,
     "product_id" INTEGER NOT NULL,
+    "body" TEXT NOT NULL,
     "rating" INTEGER NOT NULL,
     "cratedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -123,7 +89,7 @@ ALTER TABLE "Order" ADD CONSTRAINT "Order_UserID_fkey" FOREIGN KEY ("UserID") RE
 ALTER TABLE "Product" ADD CONSTRAINT "Product_UserID_fkey" FOREIGN KEY ("UserID") REFERENCES "Users"("userID") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_cat_id_fkey" FOREIGN KEY ("cat_id") REFERENCES "Category"("category_ID") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "Category"("category_ID") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Reviews" ADD CONSTRAINT "Reviews_Userid_fkey" FOREIGN KEY ("Userid") REFERENCES "Users"("userID") ON DELETE RESTRICT ON UPDATE CASCADE;
