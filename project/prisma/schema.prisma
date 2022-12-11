@@ -48,13 +48,14 @@ model Order {
   totalPrice       Float
   isPaid   Boolean     @default(false)
   CreateAt DateTime    @default(now())
+  U_Address String
   UserID     Int
   User  Users  @relation(fields: [UserID], references: [userID]) 
 }
 
 
 model Product {
-  pro_id     Int       @id @default(autoincrement())
+  pro_id    Int       @id @default(autoincrement())
   name   String
   price  Float
   description String
