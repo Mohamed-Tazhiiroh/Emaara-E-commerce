@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 const ProductRoute = require("../controllers/ProductRoute")
 
 // GET ALL

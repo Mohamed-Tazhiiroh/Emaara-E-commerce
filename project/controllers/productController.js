@@ -1,7 +1,8 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+import cloudinary from "../cloud/cloudinary"
 
-// GET ALL Products
+// GET ALL Products  every one even users 
 
 const getProducts = async (req, res) => {
     try {
@@ -41,7 +42,7 @@ const getProducts = async (req, res) => {
   };
 
 
-  // get all reviews or comments
+  // get all reviews or comments  every one can read
 
   const getReviewsOfProduct = async (req, res) => {
     const { id } = req.params;
@@ -102,7 +103,7 @@ export const getOneProduct = async (req, res) => {
 
 
 
-  //  creating product
+  //  creating product  only for Admin
   
   const createProduct = async (req, res) => {
     const { name, description, price, stockQty, category_ID } = req.body;
@@ -130,7 +131,7 @@ export const getOneProduct = async (req, res) => {
     }
   };
 
-  // update product
+  // update product  only for Admin
   
   const updateProduct = async (req, res) => {
     const { name, description, price, stockQty } = req.body;
@@ -200,7 +201,7 @@ export const getOneProduct = async (req, res) => {
   };
   
 
-  // deleting product
+  // deleting product  only for Admin
 
    const deleteItem = async (req, res) => {
     try {
