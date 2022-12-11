@@ -2,25 +2,25 @@ const express = require('express');
 const router = express.Router();
 
 
-const ProductRoute = require("../controllers/ProductRoute")
+const productController = require("../controllers/productController")
 
 // GET ALL
-router.get('/all', ProductRoute.getProducts);
-router.get('/all/cats', ProductRoute.getCats);
-router.get('/all/reviews', ProductRoute.getReviewsOfProduct);
+router.get('/all', productController.getProducts);
+router.get('/all/cats', productController.getCats);
+router.get('/all/reviews', productController.getReviewsOfProduct);
 
 // create patient
 
-router.post('/create', ProductRoute.createProduct);
+router.post('/create', productController.createProduct);
 
 // update patient patch || put -> same -> EDITING -> Modification
 
-router.patch('/edit/:pateintId', ProductRoute.updateProduct);
+router.patch('/edit/:pro_id', productController.updateProduct);
 
 // GET ONE PATIENT
 
-router.get('/patient/:patientId', ProductRoute.getOneProduct);
+router.get('/getOne/:pro_id', productController.getOneProduct);
 
 // ROUTER FOR DELETE
 
-router.delete('/patient/:patientId', ProductRoute.deleteItem);
+router.delete('/delete/:pro_id', productController.deleteproduct);

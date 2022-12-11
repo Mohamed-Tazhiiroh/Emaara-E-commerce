@@ -16,7 +16,7 @@ const getProducts = async (req, res) => {
       res.json({
         success: true,
         allProducts,
-      });
+      }); 
     } catch (error) {
       res.json({
         success: false,
@@ -203,7 +203,7 @@ export const getOneProduct = async (req, res) => {
 
   // deleting product  only for Admin
 
-   const deleteItem = async (req, res) => {
+   const deleteproduct = async (req, res) => {
     try {
       const { productId } = req.body;
       const deletingItem = await prisma.product.delete({
@@ -231,5 +231,5 @@ export const getOneProduct = async (req, res) => {
     createProduct,
     getOneProduct,
     updateProduct,
-    deleteItem
+    deleteproduct
 }
