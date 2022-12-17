@@ -19,12 +19,12 @@ CREATE TABLE "Users" (
 -- CreateTable
 CREATE TABLE "Order" (
     "order_Id" SERIAL NOT NULL,
-    "customerAddress" TEXT NOT NULL,
-    "shipping_price" DOUBLE PRECISION NOT NULL,
+    "delivery_price" DOUBLE PRECISION NOT NULL,
     "items_price" DOUBLE PRECISION NOT NULL,
     "totalPrice" DOUBLE PRECISION NOT NULL,
     "isPaid" BOOLEAN NOT NULL DEFAULT false,
     "CreateAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "U_Address" TEXT NOT NULL,
     "UserID" INTEGER NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("order_Id")
@@ -48,7 +48,7 @@ CREATE TABLE "Product" (
 -- CreateTable
 CREATE TABLE "Category" (
     "category_ID" SERIAL NOT NULL,
-    "desc" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
     "img" TEXT NOT NULL,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("category_ID")

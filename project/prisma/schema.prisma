@@ -60,8 +60,8 @@ model Product {
   price  Float
   description String
   image String
-  discount    Int       @default(0)
-  stockQty  Int
+  discount    Int?       @default(0)
+  stockQty  Int?
   UserID     Int
   category_id  Int
   Customer    Users     @relation(fields: [UserID], references: [userID])
